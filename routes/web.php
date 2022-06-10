@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +20,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+require __DIR__ . '/auth.php';
 
-require __DIR__.'/auth.php';
+Route::group(['middleware' => 'auth'], function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // Question
+    Route::resource('questions', QuestionController::class);
+
+    // Comments
+    Route::resource('comments', CommentController::class);
+
+    // Comments
+    Route::resource('categories', CategoryController::class)->except('show');
+
+    // Accounts
+    // Route::resource('accounts', AccountController::class);
+});

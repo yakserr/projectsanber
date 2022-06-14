@@ -15,10 +15,15 @@
 
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Name</span>
+                <span class="text-gray-700 dark:text-gray-400">Name Category</span>
                 <input
                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                    placeholder="Here's" name="name" />
+                    placeholder="Type a Category" name="name" value="{{ old('name') }}" />
+                @error('name')
+                <p class="text-red-700 text-xs italic mt-2">
+                    {{ $message }}
+                </p>
+                @enderror
             </label>
         </div>
         <div class="flex flex-col flex-wrap mb-4 space-y-2 md:flex-row md:items-end md:space-x-4">

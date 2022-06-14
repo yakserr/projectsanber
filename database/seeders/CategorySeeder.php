@@ -17,21 +17,32 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'name' => 'news',
+            'user_id' => 1,
         ]);
         Category::create([
             'name' => 'gaming',
+            'user_id' => 1,
+
         ]);
         Category::create([
             'name' => 'programming',
+            'user_id' => 1,
+
         ]);
         Category::create([
             'name' => 'politics',
+            'user_id' => 1,
+
         ]);
         Category::create([
             'name' => 'science',
+            'user_id' => 1,
+
         ]);
         Category::create([
             'name' => 'technology',
+            'user_id' => 1,
+
         ]);
     }
 }

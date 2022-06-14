@@ -8,7 +8,7 @@
 <div class="container px-6 mx-auto grid">
     <!-- Validation inputs -->
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Create New Categories
+        Edit Categories
     </h2>
     <form action="{{ route('categories.update' , $category) }}" method="POST">
         @csrf
@@ -20,7 +20,12 @@
                 <span class="text-gray-700 dark:text-gray-400">Name</span>
                 <input
                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                    value="{{ $category->name }}" name="name" />
+                    name="name" value="{{ old('name') ?? $category->name }}" />
+                @error('name')
+                <p class="text-red-700 text-xs italic mt-2">
+                    {{ $message }}
+                </p>
+                @enderror
             </label>
         </div>
         <div class="flex flex-col flex-wrap mb-4 space-y-2 md:flex-row md:items-end md:space-x-4">

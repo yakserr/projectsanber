@@ -51,7 +51,8 @@
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3 text-sm">
-                            {{ $loop->iteration}}
+                            {{ ($categories->perPage() * $categories->currentPage()) - ($categories->perPage() -
+                            $loop->iteration) }}
                         </td>
                         <td class="px-4 py-3">
                             <div class="flex items-center text-sm">
@@ -62,8 +63,11 @@
                                     </div>
                                 </div>
                         </td>
-                        <td class="px-4 py-3 text-sm">
-                            {{ $category->updated_at }}
+                        <td class="px-4 py-3 text-xs">
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                {{ $category->updated_at->diffForHumans() }}
+                            </span>
                         </td>
                         <td class="flex px-4 py-3 text-base space-x-3">
                             <a href="{{ route('categories.edit', $category) }}">
@@ -95,15 +99,23 @@
                     </tr>
                 </tbody>
                 @endforeach
+                @empty($category)
+                <tbody class="">
+                    <tr class="text-gray-700 dark:text-gray-400">
+                        <td colspan="4" class="px-4 py-4 text-xl text-center">
+                            No Data Found. Please Create One !
+                        </td>
+                    </tr>
+                </tbody>
+                @endempty
             </table>
-        </div>
-        <div class="pagination flex justify-center mt-6">
 
         </div>
+        <div class="pagination-space mt-1"> </div>
         <div
             class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">
-                {{ $categories->links('pagination::tailwind') }}
+                {{ $categories->links() }}
             </span>
             <span class="col-span-2"></span>
         </div>

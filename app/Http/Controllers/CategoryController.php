@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate('5');
+        $categories = Category::where('user_id', '=', Auth::id())->paginate(5);
 
         return view('categories.index', compact('categories'));
     }
@@ -37,12 +38,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user_id = Auth::id();
+
         $this->validate($request, [
-            'name'  => 'required',
+            'name'  => 'required|max:255|alpha_spaces',
         ]);
 
         Category::create([
             'name' => strtolower($request->name),
+            'user_id' => $user_id,
         ]);
 
         return redirect()
@@ -70,17 +75,27 @@ class CategoryController extends Controller
      */
     public function update(Request $request, category $category)
     {
+
+        $user_id = Auth::id();
+
         $this->validate($request, [
-            'name'  => 'required',
+            'name'  => 'required|max:255|alpha_spaces',
         ]);
 
-        $category->update([
-            'name' => strtolower($request->name),
-        ]);
+        if ($category->user_id != $user_id) {
 
-        return redirect()
-            ->route('categories.index')
-            ->with('messages', 'Category updated successfully.');
+            return redirect()
+                ->route('categories.index')
+                ->with('messages', 'You are not authorized to edit this category.');
+        } else {
+            $category->update([
+                'name' => strtolower($request->name),
+            ]);
+
+            return redirect()
+                ->route('categories.index')
+                ->with('messages', 'Category updated successfully.');
+        }
     }
 
     /**
@@ -91,10 +106,21 @@ class CategoryController extends Controller
      */
     public function destroy(category $category)
     {
-        $category->delete();
 
-        return redirect()
-            ->route('categories.index')
-            ->with('messages', 'Category deleted successfully');
+        $user_id = Auth::id();
+
+        if ($category->user_id != $user_id) {
+
+            return redirect()
+                ->route('categories.index')
+                ->with('messages', 'You are not authorized to delete this category.');
+        } else {
+
+            $category->delete();
+
+            return redirect()
+                ->route('categories.index')
+                ->with('messages', 'Category deleted successfully');
+        }
     }
 }

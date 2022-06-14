@@ -10,4 +10,21 @@ class Category extends Model
     use HasFactory;
 
     public $guarded = [];
+
+    /**
+     * Get the questions for the category.
+     */
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    /**
+     * get the owns of Category
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

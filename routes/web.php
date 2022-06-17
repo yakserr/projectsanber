@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\QuestionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('mainmenu');
 });
 
 require __DIR__ . '/auth.php';
@@ -38,5 +39,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories', CategoryController::class)->except('show');
 
     // Accounts
-    // Route::resource('accounts', AccountController::class);
+    Route::resource('accounts', UserController::class)->except(['show', 'create', 'store', 'destroy']);
 });

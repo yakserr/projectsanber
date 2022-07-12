@@ -7,22 +7,19 @@
 
     <title>Think'able</title>
 
-    <!--Font-->
+    <!---Template Windmill-->
+    <link rel="stylesheet" href="{{ asset('css/tailwind.output.css') }}" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-
-    <!--Css-->
-    <link rel="stylesheet" href="{{ asset('css/tailwind.output.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}" />
-
-    <!--JS-->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="{{ asset('js/init-alpine.js') }}"></script>
-
-    <!--Chart-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
     <script src="{{ asset('js/charts-lines.js') }}" defer></script>
+
+    <!--Css-->
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 
     <!--Trix Editor-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/trix.css') }}">

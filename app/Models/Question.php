@@ -21,8 +21,6 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-
-
     /**
      * Get the category that owns the question.
      */
@@ -30,5 +28,15 @@ class Question extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get the comments for the question.
+     */
+
+    public function comments()
+    {
+
+        return $this->hasMany(Comment::class);
     }
 }

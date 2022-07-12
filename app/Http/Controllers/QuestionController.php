@@ -133,7 +133,7 @@ class QuestionController extends Controller
 
         if ($user_id != $question->user_id) {
             return redirect()->route('questions.index')
-                ->with('error', 'You are not authorized to edit this question');
+                ->with('messages', 'You are not authorized to edit this question');
         } else {
 
             $fileImage = $request->hasFile('image');

@@ -117,7 +117,6 @@
             <span class="flex items-center col-span-3">
                 {{ $categories->links() }}
             </span>
-            <span class="col-span-2"></span>
         </div>
     </div>
 </div>

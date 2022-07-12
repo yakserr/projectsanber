@@ -1,4 +1,9 @@
 <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+    @sectionMissing('modern-sidebar')
+    <a href="{{ route('mainpage') }}" class="ml-6 mr-3 text-lg font-bold items-center text-gray-800 dark:text-gray-200">
+        Think'able
+    </a>
+    @endif
     <!-- Mobile hamburger -->
     <button class="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
         @click="toggleSideMenu" aria-label="Menu">
@@ -43,6 +48,7 @@
                 </template>
             </button>
         </li>
+        @auth
         <!-- Notifications menu -->
         <li class="relative">
             <button class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
@@ -135,5 +141,12 @@
                 </ul>
             </template>
         </li>
+        @else
+        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+        @if (Route::has('register'))
+        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+        @endif
+        @endauth
     </ul>
 </div>

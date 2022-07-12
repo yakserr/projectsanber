@@ -78,6 +78,8 @@ class CategoryController extends Controller
 
         $user_id = Auth::id();
 
+        dd($category);
+
         $this->validate($request, [
             'name'  => 'required|max:255|alpha_spaces',
         ]);

@@ -28,9 +28,7 @@
 
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen}">
-        @hasSection('modern-sidebar')
         @yield('modern-sidebar')
-        @endif
 
         <div class="flex flex-col flex-1">
             <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">

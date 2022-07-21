@@ -23,6 +23,7 @@ use App\Http\Controllers\DashboardController;
 // });
 
 Route::get('/', [DashboardController::class, 'index'])->name('mainpage');
+Route::get('/question/{question}', [DashboardController::class, 'detailQuestion'])->name('detailquestion');
 
 require __DIR__ . '/auth.php';
 

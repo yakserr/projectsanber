@@ -72,27 +72,45 @@ class UserController extends Controller
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, user $user)
+    public function update(Request $request)
     {
-        $user_id = Auth::id();
+        $user = Auth::user();
 
-        dd($user);
+        $file = $request->hasFile('image');
 
-        if ($user->id != $user_id) {
-            return redirect()->back()->with('messages', 'You are not authorized to edit this user');
-        } else {
+        if ($file) {
+
+            if ($user->image) {
+                Storage::delete($user->image);
+            }
 
             $this->validate($request, [
-                'name'  => ['required'],
+                'name'  =>  'required|string|max:255',
+                'email' =>  'required|string|email|max:255|unique:users,email,' . $user->id,
+                'image' =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            $image = $request->file('image')->store('account');
+
+            $user->update([
+                'name'  =>  $request->name,
+                'email' =>  $request->email,
+                'image' =>  $image,
+            ]);
+        } else {
+            $this->validate($request, [
+                'name'  =>  'required|string|max:255',
+                'email' =>  'required|string|email|max:255|unique:users,email,' . $user->id,
             ]);
 
             $user->update([
-                'name'  => $request->name,
+                'name'  =>  $request->name,
+                'email' =>  $request->email,
             ]);
-
-            return redirect()->route('accounts.index')
-                ->with('messages', 'Your account has been updated');
         }
+
+        return redirect()->route('accounts.index')
+            ->with('success', 'Account updated successfully');
     }
 
     /**

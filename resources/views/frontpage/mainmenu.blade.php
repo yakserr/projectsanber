@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="flex space-x-6 p-2 flex-none">
+<div class="flex space-x-6 p-9 flex-none">
     <!--Mid Content Question-->
     <div class="right basis-4/5 space-y-3">
         <div class="flex justify-between header-content">
@@ -40,7 +40,7 @@
         {{-- Question --}}
         @foreach ($questions as $question)
         <a href="{{ route('detailquestion', $question->id) }}">
-            <div class="min-w-0 p-3 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="min-w-0 p-3 my-3 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="grid grid-cols-8 gap-3">
                     <div class="details text-end space-y-3">
                         <div class="votes">

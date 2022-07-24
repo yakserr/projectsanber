@@ -39,11 +39,22 @@
                             <span class="text-gray-700 dark:text-gray-400">Image</span>
                         </label>
                         <div class="flex flex-wrap justify-center">
+                            @if ($user->image)
+                            <img src="{{ asset('storage/' . $user->image) }}" alt="Profile Picture"
+                                class="img-preview w-1/2 h-auto rounded-full shadow-md">
+                            @else
                             <img class="img-preview w-1/2  h-auto rounded-full shadow-md">
+                            @endif
                         </div>
-                        <input
-                            class="form-control block w-1/2 px-3 py-2 mt-1 text-base font-normal dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            type="file" id="image" name="image" onchange="previewImage()">
+                        <button type="button" id="image-button" onclick="showInputImage()"
+                            class=" text-white bg-blue-400 dark:bg-blue-500 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center">
+                            Change Profile Picture
+                        </button>
+                        <div id="field-input" class="hidden">
+                            <input
+                                class="form-control block w-1/2 px-3 py-2 mt-1 text-base font-normal dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                type="file" id="image" name="image" onchange="previewImage()">
+                        </div>
                         @error('image')
                         <p class="text-red-700 text-xs italic mt-2">
                             {{ $message }}
@@ -80,7 +91,7 @@
                 Change Password
             </button>
             <div class="flex flex-col flex-wrap mb-2 mt-2 space-y-2 md:flex-row md:items-end md:space-x-4">
-                <a href="javascript:history.back()">
+                <a href="{{ route('accounts.index') }}">
                     <div
                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg opacity-50 focus:outline-none">
                         Cancle
@@ -110,5 +121,13 @@
         oFReader.onload = function (oFREvent) {
             imgPreview.src = oFREvent.target.result;
         }; 
+    }
+
+    // function show field input after click on button
+    function showInputImage() {
+        const fieldInput = document.querySelector('#field-input');
+        const imageButton = document.querySelector('#image-button');
+        fieldInput.classList.remove('hidden');
+        imageButton.classList.add('hidden');;
     }
 </script>

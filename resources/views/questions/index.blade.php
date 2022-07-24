@@ -80,8 +80,8 @@
                                     ($questions->perPage() - $loop->iteration) }}</p>
                             </div>
                         </td>
-                        <td class="px-4 py-3 text-sm">
-                            {{ $question->title }}
+                        <td class="truncate px-4 py-3 text-sm">
+                            {{ ($question->title) }}
                         </td>
                         <td class="px-4 py-3 text-sm">
                             {{ $question->category->name }}

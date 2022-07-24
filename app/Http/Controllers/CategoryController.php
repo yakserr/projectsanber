@@ -76,15 +76,11 @@ class CategoryController extends Controller
     public function update(Request $request, category $category)
     {
 
-        $user_id = Auth::id();
-
-        dd($category);
-
         $this->validate($request, [
             'name'  => 'required|max:255|alpha_spaces',
         ]);
 
-        if ($category->user_id != $user_id) {
+        if ($category->user_id != Auth::id()) {
 
             return redirect()
                 ->route('categories.index')

@@ -5,78 +5,84 @@
 @endsection
 
 @section('content')
-<div class="container px-6 mx-auto grid">
-    <div class="flex items-center">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Show Question
-        </h2>
-        <a href="{{ route('questions.edit', $question) }}">
-            <button
-                class="flex items-center justify-between px-2 py-2 ml-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                aria-label="Edit">
-                <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                    </path>
-                </svg>
-            </button>
-        </a>
-    </div>
-
-    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <label class="block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Title</span>
-            <input
-                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                placeholder="Your Title" name="title" value="{{ $question->title }}" readonly />
-        </label>
-
-
-        <label class="block mt-4 text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Category</span>
-            <input
-                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                placeholder="Your Title" name="title" value="{{ $question->category->name }}" readonly />
-        </label>
-        <div class="my-6">
-            <div class="flex justify-start">
-                <div class="mb-3 w-96">
-                    @if($question->image)
-                    <label for="image" class="block mb-4 text-sm text-gray-700">
-                        <span class="text-gray-700 dark:text-gray-400">Image</span>
-                    </label>
-                    <img src="{{ asset('storage/' . $question->image) }}" alt="Image Question">
-                    @else
-                    <label for="image" class="block mb-4 text-sm text-gray-700">
-                        <span class="text-gray-700 dark:text-gray-400">No Image</span>
-                    </label>
-                    @endif
-
-                </div>
-            </div>
-        </div>
-        <div>
-            <label class="block mt-4 text-sm" for="body">
-                <span class="text-gray-700 dark:text-gray-400">
-                    Body
-                </span>
-
-                <div class="field-input dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700">
-                    <input id="body" type="hidden" name="body">
-                    <trix-editor input="body">
-                        {!! $question->body !!}
-                    </trix-editor>
-                </div>
-            </label>
-        </div>
-        <div class="flex flex-col flex-wrap mb-2 mt-2 space-y-2 md:flex-row md:items-end md:space-x-4">
-            <a href="javascript:history.back()">
-                <div
-                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg opacity-50 focus:outline-none">
-                    Back
-                </div>
+<div class="container px-9 py-3 my-6 mx-auto grid bg-gray-50 dark:bg-gray-900">
+    <div class="border-b-2 p-3 border-gray-300 dark:border-gray-700">
+        <div class="flex justify-between">
+            <h2 class="text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                {{ $question->title }}
+            </h2>
+            @if ($question->user->id == Auth::id())
+            <a href="{{ route('questions.edit', $question) }}">
+                <button
+                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-full active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    aria-label="Edit">
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                        </path>
+                    </svg>
+                </button>
             </a>
+            @endif
+        </div>
+        <div class="flex space-x-6">
+            <p class="text-sm text-gray-700 dark:text-gray-400">
+                Asked :
+                <span class="text-black dark:text-gray-200">
+                    {{ $question->created_at->diffForHumans() }}
+                </span>
+            </p>
+            <p class="text-sm text-gray-700 dark:text-gray-400">
+                By :
+                <span class="text-blue-700">
+                    {{ $question->user->name }}
+                </span>
+            </p>
         </div>
     </div>
-</div>
-@endsection
+    <div class="img mt-6 p-3 flex justify-center">
+        @if($question->image)
+        <img class=" max-w-64 max-h-64" src="{{ asset('storage/' . $question->image) }}" alt="image question">
+        @endif
+    </div>
+    <div class="mt-3 p-3 text-black dark:text-gray-300">
+        <p>
+            {!! $question->body !!}
+        </p>
+        <div class="mt-9 flex justify-start">
+            <div class="tag">
+                <p
+                    class="text-sm px-2 py-1 items-center bg-purple-600 rounded-full font-semibold text-gray-200 dark:text-gray-300">
+                    {{ '#' . $question->category->name }}
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="p-3">
+        <label class="block mt-4 text-sm" for="body">
+            <span class="text-gray-700 dark:text-gray-400">
+                Your Answer
+            </span>
+
+            <div class="field-input dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700">
+                <input id="body" type="hidden" name="body">
+                <trix-editor input="body" class="@error('body') border-red-500 @enderror ">
+                    {!! old('body') !!}
+                </trix-editor>
+            </div>
+            @error('body')
+            <p class="text-red-700 text-xs italic mt-2">
+                {{ $message }}
+            </p>
+            @enderror
+        </label>
+    </div>
+    <div class="mt-3">
+        <button
+            class="submit px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            type="submit">
+            Create Answer
+        </button>
+    </div>
+    @endsection

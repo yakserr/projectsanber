@@ -24,6 +24,7 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('mainpage');
 Route::get('/question/{question}', [DashboardController::class, 'detailQuestion'])->name('detailquestion');
+Route::get('/tags', [DashboardController::class, 'indexTags'])->name('tags');
 
 require __DIR__ . '/auth.php';
 
